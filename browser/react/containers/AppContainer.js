@@ -29,16 +29,30 @@ export default class AppContainer extends Component {
     axios.get('/api/albums/')
       .then(res => res.data)
       .then(album => this.onLoad(convertAlbums(album)));
+<<<<<<< HEAD
 
+=======
+    axios.get('/api/artists/')
+      .then(res => res.data)
+      .then(artist => this.onLoad(artist));
+>>>>>>> c2ff04436dabc0c5862c5fc14a0cc1419a6657d2
     AUDIO.addEventListener('ended', () =>
       this.next());
     AUDIO.addEventListener('timeupdate', () =>
       this.setProgress(AUDIO.currentTime / AUDIO.duration));
   }
+<<<<<<< HEAD
 
   onLoad (albums) {
     this.setState({
       albums: albums
+=======
+  // need to send artists down as a prop to the children [Module 6 // New Components]
+  onLoad (albums, artists) {
+    this.setState({
+      albums: albums,
+      artists: artists
+>>>>>>> c2ff04436dabc0c5862c5fc14a0cc1419a6657d2
     });
   }
 
@@ -98,6 +112,7 @@ export default class AppContainer extends Component {
       }));
   }
 
+<<<<<<< HEAD
   deselectAlbum () {
     this.setState({ selectedAlbum: {}});
   }
@@ -121,6 +136,30 @@ export default class AppContainer extends Component {
             albums={this.state.albums}
             selectAlbum={this.selectAlbum}
           />
+=======
+
+
+  render () {
+    console.log(this.props.params);
+    return (
+      <div id="main" className="container-fluid">
+        <div className="col-xs-2">
+          <Sidebar />
+        </div>
+        <div className="col-xs-10">
+        {
+          this.props.children ?
+          React.cloneElement(this.props.children, {
+            album: this.state.selectedAlbum,
+            currentSong: this.state.currentSong,
+            isPlaying: this.state.isPlaying,
+            toggleOne: this.toggleOn,
+
+            albums: this.state.albums,
+            selectAlbum: this.selectAlbum
+          })
+          : null
+>>>>>>> c2ff04436dabc0c5862c5fc14a0cc1419a6657d2
         }
         </div>
         <Player
