@@ -12855,7 +12855,11 @@ var AppContainer = function (_Component) {
       }).then(function (album) {
         return _this2.onLoad((0, _utils.convertAlbums)(album));
       });
-
+      _axios2.default.get('/api/artists/').then(function (res) {
+        return res.data;
+      }).then(function (artist) {
+        return _this2.onLoad(artist);
+      });
       _audio2.default.addEventListener('ended', function () {
         return _this2.next();
       });
@@ -12863,11 +12867,14 @@ var AppContainer = function (_Component) {
         return _this2.setProgress(_audio2.default.currentTime / _audio2.default.duration);
       });
     }
+    // need to send artists down as a prop to the children [Module 6 // New Components]
+
   }, {
     key: 'onLoad',
-    value: function onLoad(albums) {
+    value: function onLoad(albums, artists) {
       this.setState({
-        albums: albums
+        albums: albums,
+        artists: artists
       });
     }
   }, {
@@ -12938,20 +12945,16 @@ var AppContainer = function (_Component) {
       });
     }
   }, {
-    key: 'deselectAlbum',
-    value: function deselectAlbum() {
-      this.setState({ selectedAlbum: {} });
-    }
-  }, {
     key: 'render',
     value: function render() {
+      console.log(this.props.params);
       return _react2.default.createElement(
         'div',
         { id: 'main', className: 'container-fluid' },
         _react2.default.createElement(
           'div',
           { className: 'col-xs-2' },
-          _react2.default.createElement(_Sidebar2.default, { deselectAlbum: this.deselectAlbum })
+          _react2.default.createElement(_Sidebar2.default, null)
         ),
         _react2.default.createElement(
           'div',
@@ -14222,26 +14225,39 @@ var _react = __webpack_require__(5);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRouter = __webpack_require__(119);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Sidebar = function Sidebar(props) {
 
-  var deselectAlbum = props.deselectAlbum;
-
   return _react2.default.createElement(
-    "sidebar",
+    'sidebar',
     null,
-    _react2.default.createElement("img", { src: "juke.svg", className: "logo" }),
+    _react2.default.createElement('img', { src: 'juke.svg', className: 'logo' }),
     _react2.default.createElement(
-      "section",
+      'section',
       null,
       _react2.default.createElement(
-        "h4",
-        { className: "menu-item active" },
+        'h4',
+        { className: 'menu-item active' },
         _react2.default.createElement(
-          "a",
-          { href: "#", onClick: deselectAlbum },
-          "ALBUMS"
+          _reactRouter.Link,
+          { to: '/albums' },
+          'ALBUMS'
+        )
+      )
+    ),
+    _react2.default.createElement(
+      'section',
+      null,
+      _react2.default.createElement(
+        'h4',
+        { className: 'menu-item' },
+        _react2.default.createElement(
+          _reactRouter.Link,
+          { to: '/artists' },
+          'ARTISTS'
         )
       )
     )
@@ -14377,6 +14393,10 @@ var _Album = __webpack_require__(139);
 
 var _Album2 = _interopRequireDefault(_Album);
 
+var _Artists = __webpack_require__(271);
+
+var _Artists2 = _interopRequireDefault(_Artists);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _reactDom2.default.render(_react2.default.createElement(
@@ -14387,7 +14407,8 @@ _reactDom2.default.render(_react2.default.createElement(
     { path: '/', component: _AppContainer2.default },
     _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/albums' }),
     _react2.default.createElement(_reactRouter.Route, { path: '/albums', component: _Albums2.default }),
-    _react2.default.createElement(_reactRouter.Route, { path: '/albums/:albumId', component: _Album2.default })
+    _react2.default.createElement(_reactRouter.Route, { path: '/albums/:albumId', component: _Album2.default }),
+    _react2.default.createElement(_reactRouter.Route, { path: '/artists', component: _Artists2.default })
   )
 ), document.getElementById('app'));
 
@@ -14407,7 +14428,9 @@ var initialState = {
   currentSong: {},
   currentSongList: [],
   isPlaying: false,
-  progress: 0
+  progress: 0,
+  artists: [],
+  selectedArtist: {}
 };
 
 exports.default = initialState;
@@ -29298,6 +29321,54 @@ module.exports = function (str) {
 	});
 };
 
+
+/***/ }),
+/* 271 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(5);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouter = __webpack_require__(119);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Artists = function Artists(props) {
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(
+      'h3',
+      null,
+      'Artists'
+    ),
+    _react2.default.createElement(
+      'div',
+      { className: 'list-group' },
+      undefined.props.artists.map(function (artist) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'list-group-item', key: artist.id },
+          _react2.default.createElement(
+            _reactRouter.Link,
+            { to: '' },
+            artist.name
+          )
+        );
+      })
+    )
+  );
+};
+// import Artist from './Artist.js';
+exports.default = Artists;
 
 /***/ })
 /******/ ]);

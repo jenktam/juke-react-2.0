@@ -29,16 +29,19 @@ export default class AppContainer extends Component {
     axios.get('/api/albums/')
       .then(res => res.data)
       .then(album => this.onLoad(convertAlbums(album)));
-
+    axios.get('/api/artists/')
+      .then(res => res.data)
+      .then(artist => this.onLoad(artist));
     AUDIO.addEventListener('ended', () =>
       this.next());
     AUDIO.addEventListener('timeupdate', () =>
       this.setProgress(AUDIO.currentTime / AUDIO.duration));
   }
-
-  onLoad (albums) {
+  // need to send artists down as a prop to the children [Module 6 // New Components]
+  onLoad (albums, artists) {
     this.setState({
-      albums: albums
+      albums: albums,
+      artists: artists
     });
   }
 
@@ -98,15 +101,14 @@ export default class AppContainer extends Component {
       }));
   }
 
-  deselectAlbum () {
-    this.setState({ selectedAlbum: {}});
-  }
+
 
   render () {
+    console.log(this.props.params);
     return (
       <div id="main" className="container-fluid">
         <div className="col-xs-2">
-          <Sidebar deselectAlbum={this.deselectAlbum} />
+          <Sidebar />
         </div>
         <div className="col-xs-10">
         {
