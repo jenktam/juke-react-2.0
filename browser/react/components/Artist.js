@@ -10,18 +10,18 @@ class Artist extends React.Component {
 
   componentDidMount() {
     const artistId = this.props.routeParams.artistId;
-    const selectedArtist = this.props.selectedArtist;
+    const selectArtist = this.props.selectArtist;
+    selectArtist(artistId);
 
-    selectedArtist(artistId);
   }
   render() {
-    console.log("this.props.artist", this.props.artist);
-    const artist = this.props.artist;
+    const artist = this.props.selectedArtist;
     const album = this.props.album;
+    if (!artist) return;
 
     return (
       <div className="artist">
-        <h3>ARTIST NAME { artist.name }</h3>
+        <h3>{ artist.name }</h3>
         <h4>ALBUM NAME { album.name }</h4>
         <h4>ALBUM SONGS { album.songs }</h4>
       </div>
