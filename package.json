@@ -30,10 +30,7 @@
     "pg-native": "^1.10.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
-<<<<<<< HEAD
-=======
     "react-router": "^3.0.0",
->>>>>>> c2ff04436dabc0c5862c5fc14a0cc1419a6657d2
     "request": "^2.74.0",
     "sequelize": "^3.24.1",
     "serve-favicon": "^2.2.0",

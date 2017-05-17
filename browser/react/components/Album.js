@@ -36,4 +36,3 @@ class Album extends React.Component {
 }
 
 export default Album;
-Contact GitHub API Training Shop Blog About

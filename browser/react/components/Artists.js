@@ -3,16 +3,20 @@ import React from 'react';
 import { Link } from 'react-router';
 
 const Artists = (props) => {
+
+    const artists = props.artists;
+
   return (
     <div>
-    <h3>Artists</h3>
+    <Link to="/artists">
+      <h3>Artists</h3>
+    </Link>
       <div className="list-group">
       {
-        this.props.artists.map(artist => {
+        artists.map(artist => {
           return (
             <div className="list-group-item" key={artist.id}>
-              {/* determine where to actually Link to later! */}
-              <Link to="">{ artist.name }</Link>
+              <Link to={`/artists/${artist.artistId}`}>{ artist.name }</Link>
             </div>
           )
         })
